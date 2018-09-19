@@ -9,7 +9,12 @@
 	<configs>
 	</configs>
 	<autoconfigs>
+		<config>src/test/resources/log4j.xml</config>
+		<config>src/main/resources/applicationContext.xml</config>
+		<config>src/test/resources/test-applicationContext.xml</config>
+		<config>src/test/resources/FactoryBeanTest-context.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
+		<config>src/main/resources/log4j.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/root-context.xml</config>
 	</autoconfigs>
 	<configSets>

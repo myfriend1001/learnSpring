@@ -55,9 +55,9 @@ public class UserDaoTest {
 		DataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost/springdb", "spring", "douzone1001", true);
 		dao.setDataSource(dataSource);
 		
-		this.user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0);
-		this.user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10);
-		this.user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40);
+		this.user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0, "abc@naver.com");
+		this.user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10, "abc@naver.com");
+		this.user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40, "abc@naver.com");
 	}
 	
 	@Test
@@ -146,6 +146,27 @@ public class UserDaoTest {
 		checkSameUser(user2, users3.get(2));
 	}
 	
+	@Test
+	public void update() {
+		dao.deleteAll();
+		
+		dao.add(user1);
+		dao.add(user2);
+		
+		user1.setName("오민규");
+		user1.setPassword("springno6");
+		user1.setLevel(Level.GOLD);
+		user1.setLogin(1000);
+		user1.setRecommend(999);
+		user1.setEmail("efg@naver.com");
+		dao.update(user1);
+		
+		User user1update = dao.get(user1.getId());
+		checkSameUser(user1, user1update);
+		User user2same = dao.get(user2.getId());
+		checkSameUser(user2, user2same);
+	}
+	
 	private void checkSameUser(User user1, User user2) {
 		assertThat(user1.getId(), is(user2.getId()));
 		assertThat(user1.getName(), is(user2.getName()));
@@ -153,6 +174,7 @@ public class UserDaoTest {
 		assertThat(user1.getLevel(), is(user2.getLevel()));
 		assertThat(user1.getLogin(), is(user2.getLogin()));
 		assertThat(user1.getRecommend(), is(user2.getRecommend()));
+		assertThat(user1.getEmail(), is(user2.getEmail()));
 	}
 	
 	@Test(expected=DuplicateKeyException.class)
